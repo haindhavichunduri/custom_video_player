@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video Controller</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="videostyle.css"  rel="stylesheet">
+</head>
+<body>
+	<center>
+	<div  ng-app="myapp"   ng-controller="mycntrl"   id="wholeclass">
+		<h1 style="color: black;" >CUSTOM VIDEO PLAYER</h1>
+		<video id="mainvideo">
+			<source src="amazonHO.mp4"  type="video/mp4"   >
+		</video>
+		<br>
+		<div id="buttonclass">
+			<!--<input type="range" id="seek-bar" value="0"  ng-click="seekbar()">-->
+  			<button  ng-click="playvideo()"><i class="material-icons">play_arrow</i></button>
+  			<button ng-click="pausevideo()"><i class="material-icons">pause</i></button>
+			<button ng-click="frwdvideo()"><i class="material-icons">fast_forward</i></button>
+			<button ng-click="rewindvideo()"><i class="material-icons">fast_rewind</i></button>
+			<button ng-click="playagainvideo()"><i class="material-icons">replay</i></button>
+			<!--<div class="dropdown">
+  				<button onclick="myFunction()" class="dropbtn">speed</button>
+  				<div id="myDropdown" class="dropdown-content">
+    					<buttton><a href="#halfless"  ng-click="halflessspeed">0.5</a></button>
+    					<a href="#normal"   ng-click="normalspeed">b</a>
+    					<a href="#halfmore" ng-click="halfmorespeed">c</a>
+  				</div>
+			</div>-->
+			<button ng-click="mutevideo()"><i class="material-icons">volume_off</i></button>
+			<button ng-click="stopvideo()"><i class="material-icons">stop</i></button>
+			<button><i class="material-icons">volume_up</i></button>
+			<input id="vol-control"  type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+			<!--<div id="volmain">
+				<div id="volsub">
+				<input id="vol-control"  type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+				</div>
+			</div>-->		
+			<button type="button" id="full-screen"   ng-click="expandscrn()"><i class="material-icons">expand</i></button>
+		</div>
+	</div>
+	</center>
+</body>
+<script>
+	var app = angular.module("myapp", []);
+	app.controller('mycntrl',  function($scope){
+		var vid = document.querySelector("#mainvideo");
+		
+		$scope.playvideo = function() {
+			vid.play();
+		}
+		$scope.pausevideo = function() {
+			vid.pause();
+		}
+		$scope.frwdvideo = function() {
+			vid.currentTime+=10;
+		}
+		$scope.rewindvideo = function() {
+			vid.currentTime-=10;
+		}
+		$scope.playagainvideo = function() {
+			vid.currentTime=0;
+		}
+		$scope.mutevideo = function() {
+			vid.volume=0;
+		}
+		$scope.stopvideo = function() {
+			vid.currentTime=0;
+			vid.load()
+		}
+		$scope.expandscrn = function() {
+			vid.webkitRequestFullscreen();
+		}
+		/*
+		$scope.seekbar = function() {
+			var time = vid.duration * (seekBar.value / 100);
+			// Update the video time
+  			vid.currentTime = time;
+			var value = (100 / video.duration) * video.currentTime;
+			// Update the slider value
+  			seekBar.value = value;
+		}*/
+		/*$scope.halflessspeed = function() {
+			vid.playbackRate=0.5;	
+		}
+		$scope.normalspeed = function() {
+			vid.playbackRate=1;	
+		}
+		$scope.halfmorespeed = function() {
+			vid.playbackRate=2.5;	
+		}*/
+	});
+	window.SetVolume = function(val){
+		var player = document.querySelector("#mainvideo");
+    		console.log('Before: ' + player.volume);
+    		player.volume = val / 100;
+    		console.log('After: ' + player.volume);
+	}	
+	/*function myFunction() {
+  		document.getElementById("myDropdown").classList.toggle("show");
+	}
+
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+  	if (!event.target.matches('.dropbtn')) {
+    		var dropdowns = document.getElementsByClassName("dropdown-content");
+    		var i;
+    		for (i = 0; i < dropdowns.length; i++) {
+      			var openDropdown = dropdowns[i];
+      			if (openDropdown.classList.contains('show')) {
+        				openDropdown.classList.remove('show');
+      			}
+    		}
+  	}
+	}*/	
+</script>
+</html>
